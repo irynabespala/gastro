@@ -16,12 +16,47 @@ export class PolozkaMenu {
         if (zakladniCena < 0)
             throw new Error("Základní cena nesmí být záporná.");
     }
-    // Gettery pro přístup k private vlastnostem
+    // gettery pro přístup k private vlastnostem
     get id() { return this._id; }
     get nazev() { return this._nazev; }
     get zakladniCena() { return this._zakladniCena; }
     // metoda
     getNazev() {
         return this._nazev;
+    }
+}
+//Třída Jidlo (potomek PolozkaMenu)
+export class Jidlo extends PolozkaMenu {
+    _hmotnost;
+    _cenaKrabicky;
+    constructor(id, nazev, zakladniCena, hmotnost, cenaKrabicky) {
+        super(id, nazev, zakladniCena); // volání konstruktoru rodiče
+        this._hmotnost = hmotnost;
+        this._cenaKrabicky = cenaKrabicky;
+        // validace dat
+        if (hmotnost <= 0)
+            throw new Error("Hmotnost musí být větší než 0.");
+        if (cenaKrabicky < 0)
+            throw new Error("Cena krabičky nemůže být záporná.");
+    }
+    // výpočet ceny pro jídlo (cena jídla + obal)
+    vypocitejCenu() {
+        return this.zakladniCena + this._cenaKrabicky;
+    }
+    // getter pro hmotnost
+    get hmotnost() { return this._hmotnost; }
+}
+// Třída Napoj (potomek PolozkaMenu)
+export class Napoj extends PolozkaMenu {
+    _objem;
+    _vratnaZaloha;
+    constructor(id, nazev, zakladniCena, objem, vratnaZaloha) {
+        super(id, nazev, zakladniCena);
+        if (objem <= 0)
+            throw new Error("Objem musí být větší než 0.");
+        if (vratnaZaloha < 0)
+            throw new Error("Záloha nemůže být záporná.");
+        this._objem = objem;
+        this._vratnaZaloha = vratnaZaloha;
     }
 }
