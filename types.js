@@ -59,4 +59,26 @@ export class Napoj extends PolozkaMenu {
         this._objem = objem;
         this._vratnaZaloha = vratnaZaloha;
     }
+    // výpočet ceny pro nápoj (cena nápoje + záloha za plechovku)
+    vypocitejCenu() {
+        return this.zakladniCena + this._vratnaZaloha;
+    }
+    get objem() { return this._objem; }
+}
+// Třída Kosik
+export class Kosik {
+    // Kosik obsahuje pole PolozkaMenu[]
+    _seznamPolozek = [];
+    //metoda pro přidání položky do košíku
+    pridejPolozku(p) {
+        this._seznamPolozek.push(p);
+        console.log(`Přidáno do košíku: ${p.getNazev()}`);
+    }
+    // Výpočet celkové ceny košíku 
+    vypocitejCelkovouCenu() {
+        return this._seznamPolozek.reduce((celkem, polozka) => celkem + polozka.vypocitejCenu(), 0);
+    }
+    get seznamPolozek() {
+        return this._seznamPolozek;
+    }
 }
