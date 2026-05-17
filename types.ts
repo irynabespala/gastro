@@ -92,8 +92,12 @@ export class Kosik {
 
     // Výpočet celkové ceny košíku 
     public vypocitejCelkovouCenu(): number {
-        return this._seznamPolozek.reduce((celkem, polozka) => celkem + polozka.vypocitejCenu(), 0);
+       let celkem = 0; 
+       for (const polozka of this._seznamPolozek) {
+        celkem += polozka.vypocitejCenu();
     }
+    return celkem;
+}
 
     public get seznamPolozek(): PolozkaMenu[] {
         return this._seznamPolozek;

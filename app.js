@@ -1,55 +1,45 @@
-import { Jidlo, Napoj, Kosik, PolozkaMenu } from "./types";
-import { surovaJidla, surovaNapoje } from "./data";
-
-
-const menuPolozky: PolozkaMenu[] = [];
-
+import { Jidlo, Napoj, Kosik } from "./types.js";
+import { surovaJidla, surovaNapoje } from "./data.js";
+const menuPolozky = [];
 // Oživujeme jídla
 surovaJidla.forEach(j => {
     try {
         menuPolozky.push(new Jidlo(j.id, j.nazev, j.zakladniCena, j.hmotnost, j.cenaKrabicky));
-    } catch (error: any) {
+    }
+    catch (error) {
         console.error(`Chyba při tvorbě jídla ${j.nazev}: ${error.message}`);
     }
 });
-
 // Oživujeme nápoje
 surovaNapoje.forEach(n => {
     try {
         menuPolozky.push(new Napoj(n.id, n.nazev, n.zakladniCena, n.objem, n.vratnaZaloha));
-    } catch (error: any) {
+    }
+    catch (error) {
         console.error(`Chyba při tvorbě nápoje ${n.nazev}: ${error.message}`);
     }
 });
-
-
 // Testování polymorfismu 
 console.log("--- VÝPIS POLOŽEK MENU ---");
-
 // Díky polymorfismu můžeme volat vypocitejCenu() bez ohledu na konkrétní typ položky
 for (const polozka of menuPolozky) {
     console.log(`Položka: ${polozka.getNazev()} | Cena: ${polozka.vypocitejCenu()} Kč`);
 }
-
-
 // Testování košíku
 console.log("\n--- TESTOVÁNÍ NÁKUPNÍHO KOŠÍKU ---");
 const mujKosik = new Kosik();
-
 // Simulace nákupu 
-if(menuPolozky.length >= 2) {
+if (menuPolozky.length >= 2) {
     mujKosik.pridejPolozku(menuPolozky[0]); // Chachapuri
     mujKosik.pridejPolozku(menuPolozky[menuPolozky.length - 1]); // Limonáda Tarhun
 }
-
 // Výpis celkové ceny
 console.log(`Celková cena objednávky: ${mujKosik.vypocitejCelkovouCenu()} Kč`);
-
-
 // 4. UKÁZKA VALIDACE (Test vyhození chyby při špatných datech)
 console.log("\n--- TEST VALIDACE DAT ---");
 try {
     const chybneJidlo = new Jidlo(99, "Chakhokhbili", -50, 300, 15); // Záporná cena
-} catch (error: any) {
+}
+catch (error) {
     console.log(`Chycená chyba: "${error.message}"`);
 }
