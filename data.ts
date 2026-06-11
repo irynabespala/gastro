@@ -9,7 +9,7 @@ export const surovaJidla = [
 
 // Data pro nápoje
 export const surovaNapoje = [
-    { id: 6, nazev: "Gruzínské víno Saperavi (červené)", zakladniCena: 350, objem: 0.75, vratnaZaloha: 0, img: "img/vino.jpg" },
+    { id: 6, nazev: "Gruzínské víno Saperavi", zakladniCena: 350, objem: 0.75, vratnaZaloha: 0, img: "img/vino.jpg" },
     { id: 7, nazev: "Limonáda Natakhtari (Tarhun)", zakladniCena: 65, objem: 0.5, vratnaZaloha: 5, img: "img/tarhun.jpg" },
     { id: 8, nazev: "Minerální voda Borjomi", zakladniCena: 55, objem: 0.5, vratnaZaloha: 5, img: "img/borjomi.jpg" },
     { id: 9, nazev: "Přírodní mošt z granátového jablka", zakladniCena: 79, objem: 0.33, vratnaZaloha: 0, img: "img/mošt.jpg" }

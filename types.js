@@ -1,14 +1,17 @@
-// Bazová třída pro položku v menu
+// ==========================================================================
+// RODIČOVSKÁ TŘÍDA PRO POLOŽKU MENU
+// ==========================================================================
 export class PolozkaMenu {
     _id;
     _nazev;
     _zakladniCena;
-    constructor(id, nazev, zakladniCena) {
-        // přiřazení hodnot do vlastností
+    _img;
+    constructor(id, nazev, zakladniCena, img) {
         this._id = id;
         this._nazev = nazev;
         this._zakladniCena = zakladniCena;
-        // validace dat
+        this._img = img;
+        // Základní kontroly dat
         if (id <= 0)
             throw new Error("ID musí být kladné číslo.");
         if (nazev.trim() === "")
@@ -16,65 +19,68 @@ export class PolozkaMenu {
         if (zakladniCena < 0)
             throw new Error("Základní cena nesmí být záporná.");
     }
-    // gettery pro přístup k private vlastnostem
+    // Gettery, aby se k těm private věcem dalo v app.ts dostat
     get id() { return this._id; }
     get nazev() { return this._nazev; }
     get zakladniCena() { return this._zakladniCena; }
-    // metoda
+    get img() { return this._img; }
     getNazev() {
         return this._nazev;
     }
 }
-//Třída Jidlo (potomek PolozkaMenu)
+// ==========================================================================
+// TŘÍDA JÍDLO (POTOMEK)
+// ==========================================================================
 export class Jidlo extends PolozkaMenu {
     _hmotnost;
     _cenaKrabicky;
-    constructor(id, nazev, zakladniCena, hmotnost, cenaKrabicky) {
-        super(id, nazev, zakladniCena); // volání konstruktoru rodiče
+    constructor(id, nazev, zakladniCena, hmotnost, cenaKrabicky, img) {
+        // Pomocí super() pošleme společné věci do rodičovské třídy (včetně img)
+        super(id, nazev, zakladniCena, img);
         this._hmotnost = hmotnost;
         this._cenaKrabicky = cenaKrabicky;
-        // validace dat
         if (hmotnost <= 0)
             throw new Error("Hmotnost musí být větší než 0.");
         if (cenaKrabicky < 0)
             throw new Error("Cena krabičky nemůže být záporná.");
     }
-    // výpočet ceny pro jídlo (cena jídla + obal)
+    // Výpočet ceny: jídlo + krabička
     vypocitejCenu() {
         return this.zakladniCena + this._cenaKrabicky;
     }
-    // getter pro hmotnost
     get hmotnost() { return this._hmotnost; }
 }
-// Třída Napoj (potomek PolozkaMenu)
+// ==========================================================================
+// TŘÍDA NÁPOJ (POTOMEK)
+// ==========================================================================
 export class Napoj extends PolozkaMenu {
     _objem;
     _vratnaZaloha;
-    constructor(id, nazev, zakladniCena, objem, vratnaZaloha) {
-        super(id, nazev, zakladniCena);
+    constructor(id, nazev, zakladniCena, objem, vratnaZaloha, img) {
+        // Zde taky posíláme img do rodiče
+        super(id, nazev, zakladniCena, img);
+        this._objem = objem;
+        this._vratnaZaloha = vratnaZaloha;
         if (objem <= 0)
             throw new Error("Objem musí být větší než 0.");
         if (vratnaZaloha < 0)
             throw new Error("Záloha nemůže být záporná.");
-        this._objem = objem;
-        this._vratnaZaloha = vratnaZaloha;
     }
-    // výpočet ceny pro nápoj (cena nápoje + záloha za plechovku)
+    // Výpočet ceny: nápoj + záloha za flašku/plechovku
     vypocitejCenu() {
         return this.zakladniCena + this._vratnaZaloha;
     }
     get objem() { return this._objem; }
 }
-// Třída Kosik
+// ==========================================================================
+// TŘÍDA KOŠÍK
+// ==========================================================================
 export class Kosik {
-    // Kosik obsahuje pole PolozkaMenu[]
     _seznamPolozek = [];
-    //metoda pro přidání položky do košíku
     pridejPolozku(p) {
         this._seznamPolozek.push(p);
-        console.log(`Přidáno do košíku: ${p.getNazev()}`);
     }
-    // Výpočet celkové ceny košíku 
+    // Spočítá cenu všech věcí v košíku dohromady
     vypocitejCelkovouCenu() {
         let celkem = 0;
         for (const polozka of this._seznamPolozek) {
