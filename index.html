@@ -1,11 +1,91 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="cs">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gruzínská restaurace</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
+    <header>
+        <div class="header-content">
+            <div class="logo">Gruzínská restaurace</div>
+            <div class="header-status">Objednání online</div>
+        </div>
+    </header>
+
+    <main>
+        <section class="menu-section">
+            <h1>Menu</h1>
+            <p class="subtitle">Autentická gruzínská kuchyně připravená s láskou a tradicí</p>
+
+            <div class="tabs">
+                <button id="tab-jidla" class="tab-btn active">🍽️ Jídla</button>
+                <button id="tab-napoje" class="tab-btn">🍷 Nápoje</button>
+            </div>
+
+            <div id="menu-grid" class="menu-grid"></div>
+        </section>
+    </main>
+
+    <div id="detail-modal" class="modal hidden">
+        <div class="modal-content detail-box">
+            <button id="close-detail-btn" class="close-circle-x">&times;</button>
+            
+            <div class="detail-layout">
+                <div id="modal-img-placeholder" class="detail-img-placeholder">🍲</div>
+                
+                <div class="detail-info">
+                    <h2 id="modal-title">Název jídla</h2>
+                    <span id="modal-meta" class="detail-meta">500g</span>
+                    <p id="modal-description" class="detail-description">Tradiční gruzínská receptura.</p>
+                    
+                    <div class="detail-divider"></div>
+                    
+                    <div class="detail-controls-row">
+                        <div class="quantity-selector">
+                            <button id="btn-minus" class="qty-btn">−</button>
+                            <span id="modal-qty">1 ks</span>
+                            <button id="btn-plus" class="qty-btn">+</button>
+                        </div>
+                        
+                        <button id="modal-add-to-cart-btn" class="btn-add-gold">
+                            🛒 Do košíku <span id="modal-total-price">0 Kč</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="bottom-cart" class="bottom-cart-container">
+        <div class="cart-box-light">
+            <h2>Váš košík 🛒</h2>
+            <div class="light-divider"></div>
+            
+            <div id="cart-items" class="cart-items-scroll">
+                </div>
+            
+            <div class="light-divider"></div>
+            <div class="total-line">Celkem: <span id="cart-total">0 Kč</span></div>
+            
+            <div class="cart-buttons">
+                <button id="clear-cart-btn" class="btn-clear-light">Vyčistit košík</button>
+                <button id="order-btn" class="btn-order-dark">Objednat</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="success-modal" class="modal hidden">
+        <div class="modal-content success-box">
+            <div class="success-icon">✓</div>
+            <h2>Děkujeme za vaši objednávku</h2>
+            <p>Vaše objednávka byla úspěšně odeslána.<br>Brzy vás budeme kontaktovat.</p>
+            <button id="order-again-btn" class="btn-order-dark" style="width: 100%;">Objednat znovu</button>
+        </div>
+    </div>
+
     <script src="app.js" type="module"></script>
 </body>
 </html>

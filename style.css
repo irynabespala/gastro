@@ -1,0 +1,165 @@
+:root {
+    --bg-dark: #190a0a;
+    --bg-card: #2c1212;
+    --gold: #cca05a;
+    --text-light: #f5ebd6;
+    --text-muted: #a38f8f;
+    --btn-red: #5c1d1d;
+    
+    /* Barvy pro světlý košík */
+    --cart-bg-light: #fdfdfd;
+    --cart-text-dark: #2c1212;
+    --cart-btn-clear: #fafafa;
+}
+
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--bg-dark);
+    color: var(--text-light);
+}
+
+/* Hlavička */
+header {
+    border-bottom: 1px solid rgba(204, 160, 90, 0.2);
+    padding: 20px;
+}
+.header-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    color: var(--gold);
+    font-weight: bold;
+}
+
+/* ==========================================================================
+   HLAVNÍ STRÁNKA - ODSAZENÍ PROTI PŘEKRÝVÁNÍ
+   ========================================================================== */
+.menu-section { 
+    max-width: 1400px; 
+    margin: 40px auto; 
+    padding: 0 40px; 
+    text-align: center;
+    transition: margin-right 0.3s ease;
+}
+
+/* KLÍČOVÉ PRAVIDLO: Pokud je košík viditelný, odsuneme na velkých obrazovkách 
+   celé menu doleva, aby mu vpravo uvolnilo místo a nic se nepřekrývalo */
+body.cart-open .menu-section {
+    @media (min-width: 1100px) {
+        margin-right: 460px; /* Uvolní 460px široký pruh vpravo */
+    }
+}
+
+h1 { font-size: 3rem; color: var(--gold); margin-bottom: 5px; font-weight: 300; }
+.subtitle { color: var(--text-muted); font-style: italic; margin-bottom: 30px; }
+
+.tabs { display: flex; justify-content: center; gap: 15px; margin-bottom: 40px; }
+.tab-btn {
+    background: transparent; border: 1px solid rgba(204, 160, 90, 0.3);
+    color: var(--text-muted); padding: 10px 40px; font-size: 1.1rem; cursor: pointer; border-radius: 30px;
+}
+.tab-btn.active { border-color: var(--gold); color: var(--gold); background-color: rgba(204, 160, 90, 0.05); }
+
+/* Mřížka karet */
+.menu-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(400px, 1fr)); gap: 20px; text-align: left; }
+@media (max-width: 500px) { .menu-grid { grid-template-columns: 1fr; } }
+
+/* Karta Jídla */
+.menu-card {
+    background-color: var(--bg-card); border: 1px solid rgba(204, 160, 90, 0.15);
+    border-radius: 8px; padding: 20px; display: flex; gap: 20px; align-items: center; cursor: pointer; transition: 0.2s;
+}
+.menu-card:hover { transform: translateY(-2px); border-color: var(--gold); }
+.card-img-placeholder { width: 90px; height: 90px; background-color: rgba(0,0,0,0.2); border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 2rem; }
+.card-details { flex: 1; }
+.card-header { display: flex; justify-content: space-between; font-size: 1.2rem; margin-bottom: 5px; }
+.card-title { color: var(--gold); margin: 0; font-weight: 500; }
+.card-price { color: var(--gold); font-weight: bold; }
+.card-meta { color: var(--text-muted); font-size: 0.9rem; }
+
+/* Modální okna obecně */
+.modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.75); display: flex; align-items: center; justify-content: center; z-index: 1000; }
+.hidden { display: none !important; }
+
+/* DETAIL PRODUKTU (Mix Solenje) */
+.detail-box { background-color: var(--bg-card); border: 1px solid var(--gold); border-radius: 12px; padding: 30px; width: 90%; max-width: 650px; position: relative; }
+.close-circle-x {
+    position: absolute; top: -15px; right: -15px; width: 35px; height: 35px; background-color: var(--bg-card);
+    border: 1px solid var(--gold); color: var(--gold); border-radius: 50%; font-size: 1.2rem; cursor: pointer; display: flex; align-items: center; justify-content: center;
+}
+.close-circle-x:hover { background-color: var(--gold); color: var(--bg-dark); }
+
+.detail-layout { display: flex; gap: 25px; align-items: center; }
+@media (max-width: 550px) { .detail-layout { flex-direction: column; text-align: center; } }
+.detail-img-placeholder { width: 180px; height: 180px; background-color: rgba(0,0,0,0.3); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 4rem; }
+.detail-info { flex: 1; }
+.detail-info h2 { color: var(--gold); margin: 0 0 5px 0; font-size: 1.8rem; }
+.detail-meta { color: var(--text-muted); font-size: 1rem; display: block; margin-bottom: 10px; }
+.detail-description { color: var(--text-light); line-height: 1.5; margin-bottom: 15px; }
+.detail-divider { height: 1px; background: linear-gradient(to right, transparent, var(--gold), transparent); margin: 20px 0; }
+
+.detail-controls-row { display: flex; justify-content: space-between; align-items: center; gap: 15px; flex-wrap: wrap; }
+.quantity-selector { display: flex; align-items: center; border: 1px solid var(--gold); border-radius: 6px; overflow: hidden; background-color: rgba(0,0,0,0.2); }
+.qty-btn { background: transparent; border: none; color: var(--gold); width: 35px; height: 35px; font-size: 1.2rem; cursor: pointer; }
+.qty-btn:hover { background-color: rgba(204, 160, 90, 0.2); }
+#modal-qty { padding: 0 10px; min-width: 40px; text-align: center; font-weight: bold; }
+
+.btn-add-gold { background-color: var(--gold); color: var(--bg-dark); border: none; padding: 10px 20px; font-size: 1rem; font-weight: bold; border-radius: 6px; cursor: pointer; flex: 1; min-width: 150px; }
+.btn-add-gold:hover { background-color: #dfb26c; }
+
+
+/* ==========================================================================
+   NOVÝ PLOVOUCÍ KOŠÍK - BEZPEČNĚ VPRAVO DOLE
+   ========================================================================== */
+.bottom-cart-container { 
+    position: fixed; 
+    bottom: 30px; 
+    right: 30px; 
+    width: 400px; /* Přesná šířka krabice košíku */
+    display: flex; 
+    z-index: 999; 
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5); 
+    border-radius: 12px;
+}
+
+.cart-box-light { 
+    background-color: var(--cart-bg-light); 
+    color: var(--cart-text-dark); 
+    width: 100%; 
+    padding: 25px; 
+    border-radius: 12px; /* Plně zaoblená karta ze všech stran */
+}
+.cart-box-light h2 { margin: 0 0 10px 0; font-size: 1.5rem; display: flex; align-items: center; gap: 10px; }
+.light-divider { height: 1px; background-color: rgba(44, 18, 18, 0.15); margin: 10px 0; }
+
+.cart-items-scroll { max-height: 200px; overflow-y: auto; margin-bottom: 10px; }
+
+/* Řádek v košíku s křížkem */
+.cart-item-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px dashed rgba(44, 18, 18, 0.15); font-weight: 500; }
+.item-left { display: flex; gap: 8px; align-items: center; }
+.item-qty-badge { color: var(--gold); font-weight: bold; background-color: var(--bg-card); padding: 2px 6px; border-radius: 4px; font-size: 0.85rem; }
+.item-right { display: flex; align-items: center; gap: 15px; }
+.btn-remove-item { background: transparent; border: none; color: #cca05a; font-size: 1.4rem; font-weight: bold; cursor: pointer; padding: 0 5px; line-height: 1; }
+.btn-remove-item:hover { color: #b32424; }
+
+.cart-box-light .total-line { font-size: 1.5rem; font-weight: bold; margin: 15px 0; display: flex; justify-content: space-between; }
+.cart-box-light .cart-buttons { display: flex; gap: 15px; }
+.btn-clear-light { background-color: var(--cart-btn-clear); color: var(--cart-text-dark); border: 1px solid rgba(44, 18, 18, 0.15); padding: 12px; flex: 1; cursor: pointer; border-radius: 6px; font-weight: bold; }
+.btn-order-dark { background-color: var(--btn-red); color: white; border: none; padding: 12px; flex: 1; cursor: pointer; border-radius: 6px; font-weight: bold; }
+.btn-order-dark:hover { background-color: #7a2828; }
+
+/* Responzivita: Na mobilu košík skočí klasicky dolů na celou šířku */
+@media (max-width: 768px) {
+    .bottom-cart-container {
+        bottom: 0; right: 0; width: 100%; border-radius: 0;
+    }
+    .cart-box-light { border-radius: 12px 12px 0 0; }
+    body { padding-bottom: 280px; } /* Na mobilu uděláme místo dole */
+    body.cart-open .menu-section { margin-right: 0; }
+}
+
+/* Úspěch */
+.success-box { text-align: center; padding: 40px; }
+.success-icon { font-size: 3rem; color: var(--gold); border: 2px solid var(--gold); width: 70px; height: 70px; line-height: 70px; border-radius: 50%; margin: 0 auto 20px auto; }
